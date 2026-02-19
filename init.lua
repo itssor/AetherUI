@@ -1946,8 +1946,8 @@ function AetherUI:CreateSidebar(options, parent)
     local padding = CreateInstance("UIPadding", {
         PaddingAll = UDim.new(0, 8),
         Parent = scroll
-    end)
-    
+    })
+
     function sidebar:AddItem(options)
         options = options or {}
         
@@ -2349,7 +2349,7 @@ function AetherUI:CreateDropdown(options, parent)
             local optPadding = CreateInstance("UIPadding", {
                 PaddingLeft = UDim.new(0, 12),
                 Parent = optBtn
-            end)
+            })
             
             optBtn.MouseButton1Click:Connect(function()
                 dropdown.Selected = opt
@@ -2882,7 +2882,7 @@ function AetherUI:CreateTreeView(options, parent)
     local padding = CreateInstance("UIPadding", {
         PaddingLeft = UDim.new(0, 8),
         Parent = container
-    end)
+    })
     
     function treeView:AddNode(options)
         options = options or {}
@@ -3574,7 +3574,7 @@ function AetherUI:CreateScriptLibrary(options, parent)
     local listPadding = CreateInstance("UIPadding", {
         PaddingAll = UDim.new(0, 8),
         Parent = scriptList
-    end)
+    })
     
     function library:AddScript(name, code, category)
         category = category or "Uncategorized"
@@ -3686,7 +3686,7 @@ function AetherUI:CreateSettingsPanel(options, parent)
     local padding = CreateInstance("UIPadding", {
         PaddingTop = UDim.new(0, 4),
         Parent = container
-    end)
+    })
     
     -- Title
     local title = CreateInstance("TextLabel", {
@@ -7791,6 +7791,276 @@ local TabMetatable = {
     AddFrame = function(self, options)
         if self.Content then
             return AetherUI:CreateFrame(options, self.Content)
+        end
+    end,
+    
+    AddParagraph = function(self, options)
+        if self.Content then
+            return AetherUI:CreateParagraph(options, self.Content)
+        end
+    end,
+    
+    AddAvatar = function(self, options)
+        if self.Content then
+            return AetherUI:CreateAvatar(options, self.Content)
+        end
+    end,
+    
+    AddSpinner = function(self, options)
+        if self.Content then
+            return AetherUI:CreateSpinner(options, self.Content)
+        end
+    end,
+    
+    AddStatCard = function(self, options)
+        if self.Content then
+            return AetherUI:CreateStatCard(options, self.Content)
+        end
+    end,
+    
+    AddBreadcrumb = function(self, options)
+        if self.Content then
+            return AetherUI:CreateBreadcrumb(options, self.Content)
+        end
+    end,
+    
+    AddPagination = function(self, options)
+        if self.Content then
+            return AetherUI:CreatePagination(options, self.Content)
+        end
+    end,
+    
+    AddHTTPRequest = function(self, options)
+        if self.Content then
+            return AetherUI:CreateHTTPRequest(options, self.Content)
+        end
+    end,
+    
+    AddJSONFormatter = function(self, options)
+        if self.Content then
+            return AetherUI:CreateJSONFormatter(options, self.Content)
+        end
+    end,
+    
+    AddThemeCustomizer = function(self, options)
+        if self.Content then
+            return AetherUI:CreateThemeCustomizer(options, self.Content)
+        end
+    end,
+    
+    AddKeybindEditor = function(self, options)
+        if self.Content then
+            return AetherUI:CreateKeybindEditor(options, self.Content)
+        end
+    end,
+    
+    AddForm = function(self, options)
+        if self.Content then
+            return AetherUI:CreateForm(options, self.Content)
+        end
+    end,
+    
+    AddDatePicker = function(self, options)
+        if self.Content then
+            return AetherUI:CreateDatePicker(options, self.Content)
+        end
+    end,
+    
+    AddTimePicker = function(self, options)
+        if self.Content then
+            return AetherUI:CreateTimePicker(options, self.Content)
+        end
+    end,
+    
+    AddGrid = function(self, options)
+        if self.Content then
+            return AetherUI:CreateGrid(options, self.Content)
+        end
+    end,
+    
+    AddSegmentedControl = function(self, options)
+        if self.Content then
+            return AetherUI:CreateSegmentedControl(options, self.Content)
+        end
+    end,
+    
+    AddCarousel = function(self, options)
+        if self.Content then
+            return AetherUI:CreateCarousel(options, self.Content)
+        end
+    end,
+    
+    AddCodeBlock = function(self, options)
+        if self.Content then
+            return AetherUI:CreateCodeBlock(options, self.Content)
+        end
+    end,
+    
+    AddSettingsPanel = function(self, options)
+        if self.Content then
+            return AetherUI:CreateSettingsPanel(options, self.Content)
+        end
+    end,
+    
+    AddChart = function(self, options)
+        if self.Content then
+            return AetherUI:CreateChart(options, self.Content)
+        end
+    end,
+    
+    AddCalendar = function(self, options)
+        if self.Content then
+            return AetherUI:CreateCalendar(options, self.Content)
+        end
+    end,
+    
+    AddTable = function(self, options)
+        if self.Content then
+            return AetherUI:CreateTable(options, self.Content)
+        end
+    end,
+    
+    AddStepper = function(self, options)
+        if self.Content then
+            return AetherUI:CreateStepper(options, self.Content)
+        end
+    end,
+    
+    AddTimeline = function(self, options)
+        if self.Content then
+            return AetherUI:CreateTimeline(options, self.Content)
+        end
+    end,
+    
+    AddChipInput = function(self, options)
+        if self.Content then
+            return AetherUI:CreateChipInput(options, self.Content)
+        end
+    end,
+    
+    AddMenu = function(self, options)
+        if self.Content then
+            return AetherUI:CreateMenu(options, self.Content)
+        end
+    end,
+    
+    AddContextMenu = function(self, options)
+        if self.Content then
+            return AetherUI:CreateContextMenu(options, self.Content)
+        end
+    end,
+    
+    AddPopover = function(self, options)
+        if self.Content then
+            return AetherUI:CreatePopover(options, self.Content)
+        end
+    end,
+    
+    AddVideo = function(self, options)
+        if self.Content then
+            return AetherUI:CreateVideo(options, self.Content)
+        end
+    end,
+    
+    AddRichText = function(self, options)
+        if self.Content then
+            return AetherUI:CreateRichText(options, self.Content)
+        end
+    end,
+    
+    AddMarkdown = function(self, options)
+        if self.Content then
+            return AetherUI:CreateMarkdown(options, self.Content)
+        end
+    end,
+    
+    AddDateRangePicker = function(self, options)
+        if self.Content then
+            return AetherUI:CreateDateRangePicker(options, self.Content)
+        end
+    end,
+    
+    AddColorWheel = function(self, options)
+        if self.Content then
+            return AetherUI:CreateColorWheel(options, self.Content)
+        end
+    end,
+    
+    AddFilePicker = function(self, options)
+        if self.Content then
+            return AetherUI:CreateFilePicker(options, self.Content)
+        end
+    end,
+    
+    AddVariableExplorer = function(self, options)
+        if self.Content then
+            return AetherUI:CreateVariableExplorer(options, self.Content)
+        end
+    end,
+    
+    AddNetworkInspector = function(self, options)
+        if self.Content then
+            return AetherUI:CreateNetworkInspector(options, self.Content)
+        end
+    end,
+    
+    AddGameExplorer = function(self, options)
+        if self.Content then
+            return AetherUI:CreateGameExplorer(options, self.Content)
+        end
+    end,
+    
+    AddSidebar = function(self, options)
+        if self.Content then
+            return AetherUI:CreateSidebar(options, self.Content)
+        end
+    end,
+    
+    AddGlowEffect = function(self, options)
+        if self.Content then
+            return AetherUI:CreateGlowEffect(options, self.Content)
+        end
+    end,
+    
+    AddParticleBackground = function(self, options)
+        if self.Content then
+            return AetherUI:CreateParticleBackground(options, self.Content)
+        end
+    end,
+    
+    AddBlurOverlay = function(self, options)
+        if self.Content then
+            return AetherUI:CreateBlurOverlay(options, self.Content)
+        end
+    end,
+    
+    AddGradientBorder = function(self, options)
+        if self.Content then
+            return AetherUI:CreateGradientBorder(options, self.Content)
+        end
+    end,
+    
+    AddNoiseOverlay = function(self, options)
+        if self.Content then
+            return AetherUI:CreateNoiseOverlay(options, self.Content)
+        end
+    end,
+    
+    AddAnimatedContainer = function(self, options)
+        if self.Content then
+            return AetherUI:CreateAnimatedContainer(options, self.Content)
+        end
+    end,
+    
+    AddSkeleton = function(self, options)
+        if self.Content then
+            return AetherUI:CreateSkeleton(options, self.Content)
+        end
+    end,
+    
+    AddRippleEffect = function(self, options)
+        if self.Content then
+            return AetherUI:CreateRippleEffect(options, self.Content)
         end
     end
 }
