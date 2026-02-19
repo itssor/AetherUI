@@ -4186,7 +4186,7 @@ function AetherUI:CreateChart(options, parent)
     local barsList = CreateInstance("UIListLayout", {
         Padding = UDim.new(0, 4),
         FillDirection = Enum.FillDirection.Horizontal,
-        HorizontalAlignment = Enum.HorizontalAlignment.SpaceEvenly,
+        HorizontalAlignment = Enum.HorizontalAlignment.Center,
         Parent = barsContainer
     })
     
