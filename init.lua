@@ -1,4 +1,31 @@
-
+--[[
+    AetherUI - Advanced Roblox UI Library
+    macOS Sequoia Glassmorphism Style
+    Version 1.0.0
+    
+    Usage:
+        local AetherUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/itssor/AetherUI/main/init.lua"))()
+        
+        -- Create main window
+        local Window = AetherUI:CreateWindow({
+            Title = "AetherUI Executor",
+            Theme = "SequoiaDark",
+            Size = UDim2.new(0, 800, 0, 600),
+            Position = UDim2.new(0.5, 0, 0.5, 0)
+        })
+        
+        -- Create tabs
+        local ScriptsTab = Window:AddTab("Scripts")
+        local SettingsTab = Window:AddTab("Settings")
+        
+        -- Add components
+        ScriptsTab:AddButton({
+            Text = "Execute Script",
+            Callback = function()
+                print("Executing!")
+            end
+        })
+]]
 
 -- Services (completely lazy loaded - no game access at module load)
 local Services = {
@@ -1254,6 +1281,34 @@ function AetherUI:CreateLabel(options, parent)
         SetText = function(text) label.Text = text end,
         GetText = function() return label.Text end,
         SetColor = function(color) label.TextColor3 = color end
+    }
+    
+    return component
+end
+
+-- Paragraph Component (Multi-line Label)
+function AetherUI:CreateParagraph(options, parent)
+    options = options or {}
+    local theme = self.Theme
+    
+    local paragraph = CreateInstance("TextLabel", {
+        Name = options.Name or "Paragraph",
+        Size = options.Size or UDim2.new(1, 0, 0, 60),
+        BackgroundTransparency = 1,
+        Text = options.Text or "Paragraph text...",
+        TextColor3 = options.Color or theme.TextSecondary,
+        TextXAlignment = options.Alignment or Enum.TextXAlignment.Left,
+        Font = Enum.Font.Gotham,
+        TextSize = options.TextSize or 12,
+        TextWrapped = true,
+        Parent = parent
+    })
+    
+    local component = {
+        Frame = paragraph,
+        SetText = function(text) paragraph.Text = text end,
+        GetText = function() return paragraph.Text end,
+        SetColor = function(color) paragraph.TextColor3 = color end
     }
     
     return component
