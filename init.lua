@@ -27,16 +27,29 @@
         })
 ]]
 
--- Services
-local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local RunService = game:GetService("RunService")
-local TextService = game:GetService("TextService")
-local HttpService = game:GetService("HttpService")
+-- Services (lazy loaded)
+local Players
+local TweenService
+local RunService
+local TextService
+local HttpService
+local LocalPlayer
+local PlayerGui
 
--- Local Player
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+-- Initialize services when needed
+local function InitServices()
+    if not Players then
+        Players = game:GetService("Players")
+        TweenService = game:GetService("TweenService")
+        RunService = game:GetService("RunService")
+        TextService = game:GetService("TextService")
+        HttpService = game:GetService("HttpService")
+        
+        -- Wait for local player
+        LocalPlayer = Players.LocalPlayer or Players.PlayerAdded:Wait()
+        PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+    end
+end
 
 -- AetherUI Main Table
 local AetherUI = {
@@ -331,6 +344,9 @@ end
 
 -- Create Main Window
 function AetherUI:CreateWindow(options)
+    -- Initialize services first
+    InitServices()
+    
     options = options or {}
     local Window = {
         Tabs = {},
