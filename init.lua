@@ -1,31 +1,4 @@
---[[
-    AetherUI - Advanced Roblox UI Library
-    macOS Sequoia Glassmorphism Style
-    Version 1.0.0
-    
-    Usage:
-        local AetherUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/itssor/AetherUI/main/init.lua"))()
-        
-        -- Create main window
-        local Window = AetherUI:CreateWindow({
-            Title = "AetherUI Executor",
-            Theme = "SequoiaDark",
-            Size = UDim2.new(0, 800, 0, 600),
-            Position = UDim2.new(0.5, 0, 0.5, 0)
-        })
-        
-        -- Create tabs
-        local ScriptsTab = Window:AddTab("Scripts")
-        local SettingsTab = Window:AddTab("Settings")
-        
-        -- Add components
-        ScriptsTab:AddButton({
-            Text = "Execute Script",
-            Callback = function()
-                print("Executing!")
-            end
-        })
-]]
+
 
 -- Services (completely lazy loaded - no game access at module load)
 local Services = {
