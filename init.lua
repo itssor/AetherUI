@@ -27,28 +27,38 @@
         })
 ]]
 
--- Services (lazy loaded)
-local Players
-local TweenService
-local RunService
-local TextService
-local HttpService
-local LocalPlayer
-local PlayerGui
+-- Services (completely lazy loaded - no game access at module load)
+local Services = {
+    Players = nil,
+    TweenService = nil,
+    RunService = nil,
+    TextService = nil,
+    HttpService = nil,
+    UserInputService = nil,
+    LocalPlayer = nil,
+    PlayerGui = nil
+}
 
--- Initialize services when needed
+-- Initialize services when needed (only when CreateWindow is called)
 local function InitServices()
-    if not Players then
-        Players = game:GetService("Players")
-        TweenService = game:GetService("TweenService")
-        RunService = game:GetService("RunService")
-        TextService = game:GetService("TextService")
-        HttpService = game:GetService("HttpService")
+    if not Services.Players then
+        Services.Players = game:GetService("Players")
+        Services.TweenService = game:GetService("TweenService")
+        Services.RunService = game:GetService("RunService")
+        Services.TextService = game:GetService("TextService")
+        Services.HttpService = game:GetService("HttpService")
+        Services.UserInputService = game:GetService("UserInputService")
         
         -- Wait for local player
-        LocalPlayer = Players.LocalPlayer or Players.PlayerAdded:Wait()
-        PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+        Services.LocalPlayer = Services.Players.LocalPlayer or Services.Players.PlayerAdded:Wait()
+        Services.PlayerGui = Services.LocalPlayer:WaitForChild("PlayerGui")
     end
+end
+
+-- Shortcut accessors
+local function GetService(name)
+    InitServices()
+    return Services[name]
 end
 
 -- AetherUI Main Table
@@ -266,8 +276,13 @@ AetherUI.CreateInstance = CreateInstance
 AetherUI.DeepCopy = DeepCopy
 AetherUI.LerpColor = LerpColor
 
--- Tween Functions
+-- Tween Functions (lazy-loaded)
+local TweenService
+
 local function Tween(object, properties, duration, easingStyle, easingDirection)
+    if not TweenService then
+        TweenService = game:GetService("TweenService")
+    end
     local tweenInfo = TweenInfo.new(
         duration or 0.3,
         easingStyle or Enum.EasingStyle.Quad,
@@ -299,9 +314,11 @@ end
 
 AetherUI.Spring = Spring
 
--- ScreenGui Creation
+-- ScreenGui Creation (uses Services)
 local function CreateScreenGui(name)
-    local screenGui = PlayerGui:FindFirstChild(name)
+    local playerGui = Services.PlayerGui
+    
+    local screenGui = playerGui:FindFirstChild(name)
     if screenGui then
         screenGui:Destroy()
     end
@@ -311,7 +328,7 @@ local function CreateScreenGui(name)
         DisplayOrder = 999999,
         IgnoreGuiInset = true,
         ResetOnSpawn = false,
-        Parent = PlayerGui
+        Parent = playerGui
     })
     
     return screenGui
@@ -2084,7 +2101,7 @@ function AetherUI:CreateColorPicker(options, parent)
     return picker
 end
 
--- Keybind Component
+-- Keybind Component (lazy-loads UserInputService)
 function AetherUI:CreateKeybind(options, parent)
     options = options or {}
     local theme = self.Theme
@@ -2146,9 +2163,10 @@ function AetherUI:CreateKeybind(options, parent)
         Parent = container
     })
     
-    local userInput = game:GetService("UserInputService")
-    
     btn.MouseButton1Click:Connect(function()
+        -- Lazy load UserInputService when button is clicked
+        local userInput = game:GetService("UserInputService")
+        
         keybind.IsListening = true
         keyLabel.Text = "Press..."
         keyLabel.TextColor3 = theme.Warning
@@ -2341,14 +2359,21 @@ function AetherUI:CreateDropdown(options, parent)
         end
     end)
     
-    -- Close when clicking outside
-    game:GetService("UserInputService").InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 and dropdown.IsOpen then
-            dropdown.IsOpen = false
-            menu.Visible = false
-            Tween(arrow, { Rotation = 0 }, 0.15)
+    -- Close when clicking outside (lazy-load UserInputService)
+    local dropdownConnection = nil
+    local function setupDropdownClose()
+        if not dropdownConnection then
+            local UserInputService = game:GetService("UserInputService")
+            dropdownConnection = UserInputService.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 and dropdown.IsOpen then
+                    dropdown.IsOpen = false
+                    menu.Visible = false
+                    Tween(arrow, { Rotation = 0 }, 0.15)
+                end
+            end)
         end
-    end)
+    end
+    setupDropdownClose()
     
     function dropdown:SetOptions(options)
         dropdown.Options = options
